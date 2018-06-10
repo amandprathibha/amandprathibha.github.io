@@ -1,0 +1,99 @@
+body {
+  width: 980px;
+  height: 100%;
+  margin: 0 auto;
+  border: 1px solid #eee;
+  box-shadow: 0px 8px 8px 0px #ccc;
+  font-family: sans-serif;
+}
+
+.row-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+.column-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-1 {
+  flex: 1;
+  /*background: lightseagreen; */
+  
+  /*box-shadow: 1px 3px 1px #ccc;*/
+  /*border: 1px solid #eee;*/
+  margin-bottom: 4px;
+  /*border-radius: 2px;*/
+  color: white;
+  text-shadow: 1px 1px 1px #666;
+}
+
+.align-right{ text-align: right;}
+
+.row-1-area-1, .row-1-area-2 {
+  margin: 20px 20px;
+}
+
+.row-2-area-1, .row-2-area-2{
+  flex: 1;
+  padding: 20px;
+}
+
+
+
+.row-3 {
+  flex: 1;
+  height: 20px;
+  background: lightseagreen;
+  padding: 10px;
+}
+
+.row-2 {margin-top: 20px;}
+
+.photo-thumb {
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: -2px 1px 8px 1px #666;
+  /*margin-left: 24px;*/
+}
+
+.details a { text-decoration: underline; color: white;}
+
+.flex-column { display: flex; flex-direction: column;}
+.flex-row {display: flex; flex-direction: row;}
+.flex-1{ flex: 1;}
+.flex-2{ flex: 2;}
+.flex-3{ flex: 3;}
+
+.large-title{ font-size: 1.5em;}
+.x-large-title{ font-size: 2em;}
+.medium-title{ font-size: .8em;}
+.small-title{font-size: .7em;}
+.title{ font-size: 1em;}
+.color-7{ color: #777;}
+.color-6{ color: #666;}
+.color-9{ color: #999;}
+.color-silver{ color: #eee}
+.color-royalblue{color: royalblue;}
+.right-border{ border-right: 2px solid #999; box-shadow: 5px 0px 5px -2px #eee;}
+.margin-top-10{ margin-top: 10px;}
+.margin-top-20{ margin-top: 20px;}
+.margin-top-30{ margin-top: 30px;}
+.margin-top-40{ margin-top: 40px;}
+.margin-top-190{ margin-top: 190px;}
+.margin-top-132{ margin-top: 132px;}
+.margin-bottom-40{ margin-bottom: 40px;}
+
+.light-gray-bg{ background: #eee;}
+
+section > table > tbody > tr > td,
+section > table > tbody > tr > th { padding: 4px; text-align: center; border-right: 1px solid #ccc; height: 26px; border-bottom: 1px solid #ccc;}
+section > table > tbody > tr > th { background: linear-gradient(to bottom, #fff, #eee); }
+section > table > tbody > tr > td { font-size: .9em;}
+
+.projects-section > ul {list-style: none; padding: 0; border-top: 1px solid #eee;}
+.projects-section > ul > li{
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
