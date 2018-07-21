@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Population Distribution Across the Globe</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+
+    <script src="//d3js.org/d3.geo.projection.v0.min.js"></script>
+    <script src="//d3js.org/queue.v1.min.js"></script>
+    <script src="//d3js.org/topojson.v1.min.js"></script>
+    <style>
+      .work-1 svg {
+        background: black;
+      }
+
+      .work-1 circle {
+        fill: yellow;
+      }
+      .countries {
+        fill: none;
+        stroke: #fff;
+        stroke-linejoin: round;
+      }
+      .legendThreshold {
+        font-size: 12px;
+        font-family: sans-serif;
+      }
+      .caption {
+        fill: #000;
+        text-anchor: start;
+        font-weight: bold;
+      }
+
+      .stroke {
+        fill: none;
+        stroke: #000;
+        stroke-width: 3px;
+      }
+
+      .fill {
+        fill: #fff;
+      }
+
+      .graticule {
+        fill: none;
+        stroke: #777;
+        stroke-width: 0.5px;
+        stroke-opacity: 0.5;
+      }
+
+      .land {
+        fill: #222;
+      }
+
+      .boundary {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 0.5px;
+      }
+
+      .diagram-area {
+        border: 1px solid #eee;
+        border-radius: 2px;
+      }
+
+      span.side-title {
+        color: #444;
+        font-size: 1.2em;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .page-body section {
+        margin-top: 20px;
+      }
+
+      .x-axis path,
+      .y-axis path {
+        fill: none;
+        stroke: #666;
+        shape-rendering: crispEdges;
+        stroke-width: 1px;
+      }
+    </style>
+  </head>
+  <body onload="part1();part2(); part3(); part4();part5()" style="width: 980px; margin: 0 auto;">
+
+    <section class="title">
+      <h1>
+        <span style="color: #666; margin: 10px auto; text-align: center; width: 100%; display: block;">
+          <u>
+            <b>FINC 660 Data Visualization Project</b>
+          </u>
+        </span>
+      </h1>
+    </section>
+
+    <section class="page-body">
+
+      <section class="intro">
+
+        <span class="side-title">
+          <u>
+            <b>Introduction:</b>
+          </u>
+        </span>
+
+        <p>
+          World population is growing exponentially. population plays a vital role in the survival of any economy, On the other hand unchecked rapid population growth will lead to challenges such as Global warming, climate change, crimes, migration, refugee
+          crisis, poverty,pollution, insecurity, illiteracy, proliferation of diseases, and resource scarcity such as food & water. So, we felt it is interesting to analyze the population explosion across the world. By identifying the most populous regions
+          across the planet International Organizations can focus their developmental activities in those regions to restore peace and harmony across the globe.
+        </p>
+
+        <span class="side-title">
+          <u>
+            <b>Description of the data set:</b>
+          </u>
+        </span>
+
+        <p>
+          The data is collected from World Bank and UN websites The first visualization is from 200 cities and their population density.
+        </p>
+
+        <span>
+          <u>
+            <b>Objectives:</b>
+          </u>
+        </span>
+
+        <ol>
+
+          <li>Visualizing most dense cities across the globe</li>
+          <li>Male & Female Population Distribution in top 10 Populous countries with Stacked & Grouped Events</li>
+          <li>Regional(continent wise) Distributon of Population</li>
+          <li>Using geoJson to visualize world map with demographic statistics displayed in a tooltip on mouseover</li>
+          <li>Line Chart Visualizing exponential population growth</li>
+
+        </ol>
+      </section>
+
+      <section class="world-population-map">
+        <div class="explanation-area">
+          <p>In the visualization below, we illustrate the cities with the most dense population based on the average number of people living per square kilometre. We can fairly see that almost every continent has at least one city that is relatively densely
+            populated. However, we can see that a large concentration of the most densely populated countries can be found in South East Asian and some parts of the Middle East, South and North America.The most densely populated city in the world as at 2018 from
+            this visualisation is Manila, Mumbai, Dhaka. The Size of the circle represents the density. The larger the circle the greater is the density of the city. We can see the city name when mouse is hovered on it.
+          </p>
+        </div>
+        <div class="diagram-area">
+          <div class="work-1"></div>
+        </div>
+      </section>
+
+      <section class="world-population-stacked">
+        <div class="explanation-area">
+          <p>
+            In this visualizations, the graphs shows stacked and grouped bars of the world population by gender for the top ten most populous countries. It is not so obvious to tell which gender dominates in these top ten most populous countries in the
+            world. The split between males and females is equal among the 10 countries in terms of the gender.In USA, Brazil, Russia, Indonesia and Japan the proportion of females outweigh that of males.On the other hand, the
+            proportion of males in China, India, Pakistan, Nigeria and Bangladesh exceed that of females.We can view different visualizations based on the radio button selection (stacked or grouped)on top of the visualization.
+          </p>
+        </div>
+        <div class="diagram-area">
+          <div class="work-2">
+            <section style="margin: 40px 200px;">
+              <lable for="stacked">Stacked:</label>
+              <input type="radio" id="stacked" name="actions" selected="selected" value="stacked">
+              <lable for="stacked">Grouped:</label>
+              <input type="radio" id="stacked" name="actions" value="grouped">
+            </section>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="world-population-continent">
+        <div class="explanation-area">
+
+          <span class="side-title">
+            <u>
+              <b>World Population by Continent:</b>
+            </u>
+          </span>
+
+          <p>
+            This visualization measures the population of the world on a continent basis. We can see that ASIA dominates the world population with about 56.5% as at 2018 followed by Africa.Thus, globally, Asia is the most densely populated continent whereas
+            Oceania is the lowest densely populated countries.
+          </p>
+
+          
+
+        </div>
+        <div class="diagram-area">
+          <div class="work-3"></div>
+        </div>
+      </section>
+
+      <section class="world-population-globe">
+        <div class="explanation-area">
+          <p>This is the(GeoJson) world map which depicts the population of the country as at 2018. When mouse is hovered across the country it displays the demographic statistics such as country name , population , growth rate and area in a tooltip. It
+            provides the growth rate between 2017 and 2018 as well as the land area occupied by the country in km square.</p>
+        </div>
+        <div class="diagram-area">
+          <div class="work-4"></div>
+        </div>
+      </section>
+
+      <section class="world-population-globe">
+        <div class="explanation-area">
+          <p><u> <b><h3>Line Chart of Population Explosion:</h3></b></u></p>
+          <p>
+            The numerous measures taken by International & National governments such as Industrial Revolution, Socio economic changes over the course of modernization and structural changes to the economy, rise in the status and opportunities for women and her economic independence led to low fertility and low mortality. Finally, this led to "Demographic Transition-Low Birth and Death rates": as a result, the population growth rate has declined gradually from 2.1% during 1960's & 1970's to the present 1.12%.
+
+            AS stated earlier population explosion is exponential - Infact it nearly took 123 years to reach 2 billion count, 33 years to reach 3billion, 14years to reach 4billion, 13 years to reach 5billion, 12 years to reach 6billion, 12 years to reach 7billion, 12 years to reach 8billion,14 years to reach 9billion,18 years to reach 10billion. Since 2000 the trend has changed, the number of years are going to increase to add additional billion population to the exisisting count .So, This clearly indicates that all the measures taken by international and national governments is leading to lower the population growth and to stabilize it gradually and make the world a better to place to live.
+            
+          </p>
+        </div>
+        <div class="diagram-area">
+          <div class="work-5"></div>
+        </div>
+      </section>
+
+      <section class="conclusion">
+
+        <span class="side-title">
+          <u>
+            <b>Conclusion:</b>
+          </u>
+        </span>
+
+        <p>This project has used d3.js to briefly describe world population through visualizations. As a result, we have found that most of the densely populated countries are in the South Eastern part of Asia. The visualizations have also shown that there isn't any significant difference between male and female population in the top ten most populous countries. Five of the countries have females dominating and viceversa in remaining countries. On a continent by continent basis, we have established
+          that Asia is the world's most densely populated continent followed by Africa with Oceania having the lowest population. Despite low population growth rate the population is incresing due to gap in the fertility and mortality rates especially in under
+          developed and developing countries. 
+        </p>
+      </section>
+
+    </section>
+
+    <script>
+
+      function part1() {
+        var outerWidth = 980;
+        var outerHeight = 400;
+        var margin = {
+          left: -50,
+          top: 0,
+          right: -50,
+          bottom: 0
+        };
+
+        var xColumn = "longitude";
+        var yColumn = "latitude";
+        var rColumn = "population";
+        var peoplePerPixel = 100000;
+
+        var innerWidth = outerWidth - margin.left - margin.right;
+        var innerHeight = outerHeight - margin.top - margin.bottom;
+
+        var svg = d3.select(".work-1").append("svg").attr("width", outerWidth).attr("height", outerHeight).style('padding', '40px');
+
+        var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var xScale = d3.scale.linear().range([0, innerWidth]);
+        var yScale = d3.scale.linear().range([innerHeight, 0]);
+        var rScale = d3.scale.sqrt();
+
+        var tooltip = d3.select("body").append("div").style("position", "absolute").style("z-index", "10").style("visibility", "hidden").style('color', 'white');
+
+        function render(data) {
+
+          xScale.domain(d3.extent(data, function (d) {
+            return d[xColumn];
+          }));
+          yScale.domain(d3.extent(data, function (d) {
+            return d[yColumn];
+          }));
+          rScale.domain([
+            0,
+            d3.max(data, function (d) {
+              return d[rColumn];
+            })
+          ]);
+
+          // Compute the size of the biggest circle as a function of peoplePerPixel.
+          var peopleMax = rScale.domain()[1];
+          var rMin = 0;
+          var rMax = Math.sqrt(peopleMax / (peoplePerPixel * Math.PI));
+          rScale.range([rMin, rMax]);
+
+          setTimeout(function () {
+            var circles = g.selectAll("circle").data(data);
+            circles.enter().append("circle");
+            circles.attr("cx", function (d) {
+              return xScale(d[xColumn]);
+            }).attr("cy", function (d) {
+              return yScale(d[yColumn]);
+            }).attr("r", function (d) {
+              return rScale(d[rColumn]);
+            }).on("mouseover", function (d) {
+              return tooltip.text(d.name).style("visibility", "visible");
+            }).on("mousemove", function () {
+              return tooltip.style("top", (event.pageY - 10) + "px").style("left", (event.pageX + 10) + "px");
+            }).on("mouseout", function () {
+              return tooltip.style("visibility", "hidden");
+            });
+
+            circles.exit().remove();
+          }, 1000);
+        }
+
+        function type(d) {
+          d.latitude = +d.latitude;
+          d.longitude = +d.longitude;
+          d.population = +d.population;
+          return d;
+        }
+
+        d3.csv("data/worldcities.csv", type, render);
+      }
+
+      //2
+
+      function part2() {
+        var n = 2, // number of layers
+          m = 10; // number of samples per layer
+
+        var margin = {
+            top: 20,
+            right: 50,
+            bottom: 100,
+            left: 75
+          },
+          width = 980 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+        var svg = d3.select(".work-2").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        d3.csv("data/popmf18.csv", function (data) {
+
+          var headers = ["Male", "Female"];
+
+          var layers = d3.layout.stack()(headers.map(function (category) {
+            return data.map(function (d) {
+              return {
+                x: d.Country,
+                y: +d[category]
+              };
+            });
+          }));
+
+          var yGroupMax = d3.max(layers, function (layer) {
+            return d3.max(layer, function (d) {
+              return d.y;
+            });
+          });
+          var yStackMax = d3.max(layers, function (layer) {
+            return d3.max(layer, function (d) {
+              return d.y0 + d.y;
+            });
+          });
+
+          var xScale = d3.scale.ordinal().domain(layers[0].map(function (d) {
+            return d.x;
+          })).rangeRoundBands([
+            25, width
+          ], .08);
+
+          var siFormat = d3.format("s");
+          var customTickFormat = function (d) {
+            return siFormat(d).replace("G", "B");
+          };
+
+          var y = d3.scale.linear().domain([0, yStackMax]).range([height, 0]);
+
+          var color = d3.scale.ordinal().domain(headers).range(["crimson", "skyblue"]);
+
+          var xAxis = d3.svg.axis().scale(xScale).tickSize(0).tickPadding(6).orient("bottom");
+
+          var yAxis = d3.svg.axis().scale(y).orient("left").tickFormat(customTickFormat);
+
+          var layer = svg.selectAll(".layer").data(layers).enter().append("g").attr("class", "layer").style("fill", function (d, i) {
+            return color(i);
+          });
+
+          var rect = layer.selectAll("rect").data(function (d) {
+            return d;
+          }).enter().append("rect").attr("x", function (d) {
+            return xScale(d.x);
+          }).attr("y", height).attr("width", xScale.rangeBand()).attr("height", 0);
+
+          rect.transition().delay(function (d, i) {
+            return i * 10;
+          }).attr("y", function (d) {
+            return y(d.y0 + d.y);
+          }).attr("height", function (d) {
+            return y(d.y0) - y(d.y0 + d.y);
+          });
+
+          //********** AXES ************
+          svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", function (d) {
+            return "rotate(-45)"
+          });
+
+          svg.append("g").attr("class", "y axis").attr("transform", "translate(20,0)").call(yAxis).append("text").attr("transform", "rotate(-90)").attr({"x": -150, "y": -70}).attr("dy", ".75em").style("text-anchor", "end").text("population count");
+
+          var legend = svg.selectAll(".legend").data(headers.slice().reverse()).enter().append("g").attr("class", "legend").attr("transform", function (d, i) {
+            return "translate(-20," + i * 20 + ")";
+          });
+
+          legend.append("rect").attr("x", width - 18).attr("width", 18).attr("height", 18).style("fill", color);
+
+          legend.append("text").attr("x", width - 24).attr("y", 9).attr("dy", ".35em").style("text-anchor", "end").text(function (d) {
+            return d;
+          });
+
+          d3.selectAll("input").on("change", change);
+
+          var timeout = setTimeout(function () {
+            d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
+          }, 2000);
+
+          function change() {
+            clearTimeout(timeout);
+            if (this.value === "grouped") {
+              transitionGrouped();
+            } else {
+              transitionStacked();
+            }
+          }
+
+          function transitionGrouped() {
+            y.domain([0, yGroupMax]);
+
+            rect.transition().duration(500).delay(function (d, i) {
+              return i * 10;
+            }).attr("x", function (d, i, j) {
+              return xScale(d.x) + xScale.rangeBand() / n * j;
+            }).attr("width", xScale.rangeBand() / n).transition().attr("y", function (d) {
+              return y(d.y);
+            }).attr("height", function (d) {
+              return height - y(d.y);
+            });
+
+            rect.on("mouseover", function () {
+              tooltip.style("display", null);
+            }).on("mouseout", function () {
+              tooltip.style("display", "none");
+            }).on("mousemove", function (d) {
+              var xPosition = d3.mouse(this)[0] - 15;
+              var yPosition = d3.mouse(this)[1] - 25;
+              tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+              tooltip.select("text").text(d.x + ' (' + d.y + ' )');
+            });
+          };
+
+          function transitionStacked() {
+            y.domain([0, yStackMax]);
+
+            rect.transition().duration(500).delay(function (d, i) {
+              return i * 10;
+            }).attr("y", function (d) {
+              return y(d.y0 + d.y);
+            }).attr("height", function (d) {
+              return y(d.y0) - y(d.y0 + d.y);
+            }).transition().attr("x", function (d) {
+              return xScale(d.x);
+            }).attr("width", xScale.rangeBand());
+
+            rect.on("mouseover", function () {
+              tooltip.style("display", null);
+            }).on("mouseout", function () {
+              tooltip.style("display", "none");
+            }).on("mousemove", function (d) {
+              var xPosition = d3.mouse(this)[0] - 15;
+              var yPosition = d3.mouse(this)[1] - 25;
+              // console.log(xPosition);
+              tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+              tooltip.select("text").text(d.x + ' (' + d.y + ' )');
+            });
+          };
+
+          var tooltip = svg.append("g").attr("class", "tooltip");
+
+          tooltip.append("rect").attr("width", 30).attr("height", 20).attr("fill", "red").style("opacity", 0.5);
+
+          tooltip.append("text").attr("x", 15).attr("dy", "1.2em").style("text-anchor", "middle").attr("font-size", "12px").attr("font-weight", "bold");
+        });
+
+      }
+
+      function part3() {
+
+        //Width and height world 8050 in 2020. population region wise in 2020
+        var w = 500;
+        var h = 500;
+
+        var dataset = [
+          {
+            continent: "Africa",
+            share: 1216,
+            percent: 16.36
+
+          }, {
+            continent: "North America",
+            share: 579,
+            percent: 7.79
+          }, {
+            continent: "Europe",
+            share: 738,
+            percent: 9.94
+          }, {
+            continent: "South America",
+            share: 422,
+            percent: 5.68
+          }, {
+            continent: "Asia",
+            share: 4436,
+            percent: 59.69
+          }, {
+            continent: "Oceania",
+            share: 39,
+            percent: 0.54
+          }
+        ];
+
+        var width = 980,
+          height = 500,
+          radius = Math.min(width, height) / 2;
+
+        var color = d3.scale.category10();
+
+        var arc = d3.svg.arc().outerRadius(radius - 10).innerRadius(radius - 70);
+
+        var pie = d3.layout.pie().sort(null).value(function (d) {
+          return d.share;
+        });
+
+        var svg = d3.select(".work-3").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        var g = svg.selectAll(".arc").data(pie(dataset)).enter().append("g").attr("class", "arc");
+
+        g.append("path").attr("d", arc).style("fill", function (d, i) {
+          return color(i);
+        });
+
+        g.append("text").attr("transform", function (d) {
+          return "translate(" + arc.centroid(d) + ")";
+        }).attr("dy", ".35em").text(function (d) {
+          return d.data.continent + '(' + d.data.percent + '%)';
+        });
+
+        var legends = g.select('.legend').selectAll('g').data(dataset).enter().append('g').attr('transform', function (d, i) {
+          return 'translate(' + (
+            i * 150 + 50
+          ) + ', 10)';
+        });
+
+        legends.append('circle').attr('class', 'legend-icon').attr('r', 6).style('fill', function (d, i) {
+          return color(i);
+        });
+
+        legends.append('text').attr('dx', '1em').attr('dy', '.3em').text(function (d) {
+          return d.continent;
+        });
+
+      }
+
+      function part4() {
+
+        var width = 980,
+          height = 580;
+
+        var color = d3.scale.category10();
+
+        var projection = d3.geo.kavrayskiy7().scale(170).translate([
+          width / 2,
+          height / 2
+        ]).precision(.1);
+
+        var path = d3.geo.path().projection(projection);
+
+        var graticule = d3.geo.graticule();
+
+        var svg = d3.select(".work-4").append("svg").attr("width", width).attr("height", height);
+
+        svg.append("defs").append("path").datum({type: "Sphere"}).attr("id", "sphere").attr("d", path);
+
+        svg.append("use").attr("class", "stroke").attr("xlink:href", "#sphere");
+
+        svg.append("use").attr("class", "fill").attr("xlink:href", "#sphere");
+
+        svg.append("path").datum(graticule).attr("class", "graticule").attr("d", path);
+
+        queue().defer(d3.json, "data/geo_world_map.json").defer(d3.csv, "data/geopop.csv").await(ready);
+
+        function ready(error, world, names) {
+
+          var countries = topojson.feature(world, world.objects.countries).features;
+          countries = countries.filter(function (d) {
+            return names.some(function (n) {
+              if (d.id == n.id) {
+                d.population = n.population;
+                d.growth_rate = n.growth_rate;
+                d.area = n.area;
+                d.density = n.density;
+                return d.name = n.country;
+              }
+            });
+          }).sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+          });
+
+          var neighbors = topojson.neighbors(world.objects.countries.geometries);
+
+          svg.selectAll(".country").data(countries).enter().insert("path", ".graticule").attr("class", "country").attr("d", path).style("fill", function (d, i) {
+            return color(d.color = d3.max(neighbors[i], function (n) {
+              return countries[n]
+                ? countries[n].color
+                : '#eee';
+            }) + 1 | 0);
+          }).append('title', function (d, i) {
+            return countries[i].name;
+          }).text(function (d, i) {
+            return countries[i].name + ' - Population=' + (
+              countries[i].population || ''
+            ) + ' - Growth Rate=' + (
+              countries[i].growth_rate || ''
+            ) + ' - Area=' + (
+              countries[i].area || ''
+            );
+          })
+
+          svg.insert("path", ".graticule").datum(topojson.mesh(world, world.objects.countries, function (a, b) {
+            return a !== b;
+          })).attr("class", "boundary").attr("d", path);
+        }
+
+      }
+
+      function part5() {
+
+        function lineChart() {
+          var width = 980;
+          var height = 450;
+          var padding = 20;
+          var margin = {
+            left: 75,
+            top: 10,
+            right: 50,
+            bottom: 75
+          };
+          var w = width - margin.left - margin.right;
+          var h = height - margin.top - margin.bottom;
+
+          var data = [
+
+            {
+              "Year": '01-01-1804',
+              "Population": 1
+            }, {
+              "Year": '01-01-1927',
+              "Population": 2
+            }, {
+              "Year": '01-01-1960',
+              "Population": 3
+            }, {
+              "Year": '01-01-1974',
+              "Population": 4
+            }, {
+              "Year": '01-01-1987',
+              "Population": 5
+            }, {
+              "Year": '01-01-1999',
+              "Population": 6
+            }, {
+              "Year": '01-01-2011',
+              "Population": 7
+            }, {
+              "Year": '01-01-2023',
+              "Population": 8
+            }, {
+              "Year": '01-01-2037',
+              "Population": 9
+            }, {
+              "Year": '01-01-2055',
+              "Population": 10
+            }
+          ];
+
+          var parseDate = d3.time.format("%d-%m-%Y").parse;
+
+          data.forEach(function (d) {
+            d.Year = parseDate(d.Year);
+
+          });
+
+          var x = d3.time.scale().range([0, w]);
+          var y = d3.scale.linear().range([h, 0]);
+
+          var xAxis = d3.svg.axis().scale(x).orient("bottom");
+          var yAxis = d3.svg.axis().scale(y).orient("left");
+
+          var line = d3.svg.line().x(function (d) {
+            return x(d.Year);
+          }).y(function (d) {
+            return y(d.Population);
+          });
+
+          x.domain(d3.extent(data, function (d) {
+            return d.Year;
+          }));
+
+          y.domain([
+            0,
+            d3.max(data, function (d) {
+              return d.Population;
+            })
+          ]);
+
+          var svg = d3.select('.work-5').append('svg').attr('width', w + margin.left + margin.right).attr('height', h + margin.top + margin.bottom).append('g').attr('transform', 'translate(-900,0)');
+
+          svg.append("g").attr("transform", "translate(20,0)").append("text").attr("transform", "rotate(0)").attr({
+            "x": w / 2,
+            "y": h + 60
+          }).attr("dy", ".75em").style("text-anchor", "end").text("Year");
+
+          var xGuide = svg.append("g").attr("class", "x-axis").attr("transform", "translate(0," + (
+            h + 5
+          ) + ")").call(xAxis).selectAll("text").attr("y", 0).attr("x", 9).attr("dy", ".05em").attr("transform", "rotate(90)").style("text-anchor", "start")
+
+          var yGuide = svg.append("g").attr("class", "y-axis").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 6).attr("dy", ".05em").style("text-anchor", "end");
+
+          svg.append("g").attr("transform", "translate(20,0)").append("text").attr("transform", "rotate(-90)").attr({"x": -150, "y": -70}).attr("dy", ".75em").style("text-anchor", "end").text("Population in Billions");
+
+          var animateLine = svg.append("path").datum(data).attr("class", "line").attr("d", line).attr('stroke', 'tomato').attr('stroke-width', 1).attr('fill', 'none');
+
+          svg.transition().delay(800).duration(2200).ease('elastic')
+          //.attr('opacity', 1)
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        };
+
+        lineChart();
+
+      }
+    </script>
+
+  </body>
+</html>
